@@ -11,20 +11,27 @@
     color: white;
 }
 
-/* .container {
+.container {
     margin: 100px auto;
-    justify-content: space-evenly;
-    display: flex;
-} */
+}
+
+.col-md-4 {
+    padding: 20px 10px 5px 5px;
+}
+
+.card-title {
+    margin: 20px;
+}
 
 .card-header {
     background-color: var(--primary);
     color: var(--secondary);
+    padding: 20px 10px 5px 5px;
 }
 
 .card-body {
     background-color: var(--tertiary);
-    /* padding: 5px; */
+    padding: 20px 15px 5px 15px;
 }
 
 /* .card {

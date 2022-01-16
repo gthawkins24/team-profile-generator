@@ -1,14 +1,18 @@
+// modules and functions required
 const fs = require('fs');
 const inquirer = require('inquirer');
 const generateCards = require('./src/generatehtml');
 
+// constructor functions required
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Employee = require('./lib/Employee');
 
+// empty array to push each employee object to
 const employeesArray = [];
 
+// creates manager object first with prompts
 const newManager = () => {
     return inquirer.prompt ([
         {
@@ -61,6 +65,7 @@ const newManager = () => {
             }
         },
     ])
+    // add manager object to employees array
     .then((managerInfo) => {
         const { name, id, email, officeNumber } = managerInfo;
         const newManager = new Manager (name, id, email, officeNumber);
@@ -68,6 +73,7 @@ const newManager = () => {
     })
 };
 
+// creates new employee from prompts
 const newEmployee = () => {
     return inquirer.prompt ([
         {
@@ -153,7 +159,7 @@ const newEmployee = () => {
     .then(employeeInfo => {
         let { name, role, id, email, github, school, addAnotherEmployee } = employeeInfo;
         let employee;
-
+// depending on role, gives appropriate values
         if (role === "Engineer") {
             employee = new Engineer (name, id, email, github);
         } else if (role === "Intern") {
@@ -161,10 +167,10 @@ const newEmployee = () => {
         } else {
             employee = new Employee (name, id, email);
         }
-
+// pushes each employee to employee array
         employeesArray.push(employee)
         console.log(employeesArray);
-
+// if prompt indicates to add another employee, start questions again
         if (addAnotherEmployee) {
             return newEmployee();
         } else {
@@ -173,6 +179,7 @@ const newEmployee = () => {
     })
 };
 
+// takes generated html code and writes html file
 const writeFile = htmlData => {
     fs.writeFile('./dist/index.html', htmlData, err => {
 
@@ -185,6 +192,7 @@ const writeFile = htmlData => {
     
 }
 
+// starts with new manager, then new employees, then makes cards based on prompts, then starts write file function
 newManager()
     .then(newEmployee)
     .then(employeesArray => {
