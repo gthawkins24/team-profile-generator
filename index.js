@@ -1,8 +1,13 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
-// const generatehtml = require('/src/generatehtml');
+const generateCards = require('./src/generatehtml');
 
-const employeesArray = []
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+const Employee = require('./lib/Employee');
+
+const employeesArray = [];
 
 const newManager = () => {
     return inquirer.prompt ([
@@ -56,7 +61,7 @@ const newManager = () => {
             }
         },
     ])
-    .then(managerInfo => {
+    .then((managerInfo) => {
         const { name, id, email, officeNumber } = managerInfo;
         const newManager = new Manager (name, id, email, officeNumber);
         employeesArray.push(newManager);
@@ -69,7 +74,20 @@ const newEmployee = () => {
             type: 'list',
             name: 'role',
             message: 'Enter employee role',
-            choices: ['Engineer', 'Intern']
+            choices: ['Engineer', 'Intern', 'Employee']
+        },
+        {
+            type: 'input',
+            name: 'name',
+            message: 'Enter employee name',
+            validate: employeeNameInput => {
+                if (employeeNameInput) {
+                    return true;
+                } else {
+                    console.log('You must enter the Manager name!')
+                    return false;
+                }
+            }
         },
         {
             type: 'input',
@@ -133,35 +151,45 @@ const newEmployee = () => {
         }
     ])
     .then(employeeInfo => {
-        let { name, role, id, email, github, school } = employeeInfo;
-        let employee = {};
+        let { name, role, id, email, github, school, addAnotherEmployee } = employeeInfo;
+        let employee;
 
         if (role === "Engineer") {
             employee = new Engineer (name, id, email, github);
         } else if (role === "Intern") {
             employee = new Intern (name, id, email, school);
+        } else {
+            employee = new Employee (name, id, email);
         }
 
         employeesArray.push(employee)
+        console.log(employeesArray);
 
         if (addAnotherEmployee) {
-            return newEmployee;
+            return newEmployee();
         } else {
             return employeesArray;
         }
     })
 };
 
-const writeFile = function() {
-    fs.writeFile('/dist/index.html');
-    console.log('Page written!');
+const writeFile = htmlData => {
+    fs.writeFile('./dist/index.html', htmlData, err => {
+
+        if (err) {
+            console.log(`Error: ${err}`)
+        } else {
+            console.log('Page written!');
+        }
+    });
+    
 }
 
 newManager()
     .then(newEmployee)
     .then(employeesArray => {
-        return makeHTML(employeesArray);
+        return generateCards(employeesArray);
     })
-    .then( () => {
-        writeFile()
+    .then(htmlData => {
+        writeFile(htmlData);
     })
