@@ -158,7 +158,7 @@ const newEmployee = () => {
     ])
     .then(employeeInfo => {
         let { name, role, id, email, github, school, addAnotherEmployee } = employeeInfo;
-        let employee;
+
 // depending on role, gives appropriate values
         if (role === "Engineer") {
             employee = new Engineer (name, id, email, github);
@@ -169,7 +169,6 @@ const newEmployee = () => {
         }
 // pushes each employee to employee array
         employeesArray.push(employee)
-        console.log(employeesArray);
 // if prompt indicates to add another employee, start questions again
         if (addAnotherEmployee) {
             return newEmployee();

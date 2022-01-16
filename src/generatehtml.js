@@ -14,7 +14,7 @@ const makeManagerCard = employee => {
             <div class="card-body">
                 <ul class="list-group list-group">
                     <li class="list-group-item">ID: ${employee.id}</li>
-                    <li class="list-group-item">Email: ${employee.email}</li>
+                    <li class="list-group-item">Email: <a href="mailto:${employee.email}">${employee.email}</a></li>
                     <li class="list-group-item">Office Number: ${employee.officeNumber}</li>
                 </ul>
             </div>
@@ -37,8 +37,8 @@ const makeEngineerCard = employee => {
         <div class="card-body">
             <ul class="list-group list-group">
                 <li class="list-group-item">ID: ${employee.id}</li>
-                <li class="list-group-item">Email: ${employee.email}</li>
-                <li class="list-group-item">GitHub: ${employee.github}</li>
+                <li class="list-group-item">Email: <a href="mailto:${employee.email}">${employee.email}</a></li>
+                <li class="list-group-item">GitHub: <a href="https://github.com/${employee.github}">${employee.github}</a></li>
             </ul>
         </div>
     </div>
@@ -61,7 +61,7 @@ const makeInternCard = employee => {
         <div class="card-body">
             <ul class="list-group list-group">
                 <li class="list-group-item">ID: ${employee.id}</li>
-                <li class="list-group-item">Email: ${employee.email}</li>
+                <li class="list-group-item">Email: <a href="mailto:${employee.email}">${employee.email}</a></li>
                 <li class="list-group-item">School: ${employee.school}</li>
             </ul>
         </div>
@@ -84,7 +84,7 @@ const makeEmployeeCard = employee => {
         <div class="card-body">
             <ul class="list-group list-group">
                 <li class="list-group-item">ID: ${employee.id}</li>
-                <li class="list-group-item">Email: ${employee.email}</li>
+                <li class="list-group-item">Email: <a href="mailto:${employee.email}">${employee.email}</a></li>
             </ul>
         </div>
     </div>
